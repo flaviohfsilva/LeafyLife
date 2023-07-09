@@ -1,0 +1,94 @@
+<body>
+    <main>
+        <!-- ----------------- MAIN SCREEN ----------------- -->
+        <section class="main-screen" id="main-screen">
+            
+            <img class="detail-leaf" src="../../assets/img/leaf.png" alt="leaf">
+            
+            <div class="main-container">
+                
+                <!-- ----------------- RIGHT SCREEN ----------------- -->
+                <div class="right-screen">
+
+                    <h1 class="header-right">Crie a sua conta</h1>
+
+                    <!-- ----------------- FORM ----------------- -->
+                    <form class="form" (ngSubmit)="submit()" [formGroup]="registerForm" #formDir="ngForm">
+                       
+                        <div class="input-field">
+                            
+                            <!--NAME-->
+                            <label for="user">Nome</label>
+                            <input class="form-input" type="text" name="user" id="user" formControlName="nome"  (focus)="cleanMessageNewRegister()" required>
+                            <!-- O (focus) é um evento de interação do usuário que é acionado quando o elemento html recebe o foco, nesse caso, quando os inputs são selecionados-->
+                            
+                            <!-- ----------------- NAME VALIDATION ----------------- -->
+                            <div *ngIf="nome.invalid && nome.touched" class="error-validation">
+                                <p *ngIf="nome.errors?.['required']">Por favor, insira o seu nome.</p>
+                            </div>
+
+
+                            <!--EMAIL-->
+                            <label for="email">Endereço de e-mail</label>
+                            <input class="form-input" type="email" name="email" id="email" formControlName="email" (focus)="cleanMessage()" required>
+                            
+                            <!-- ----------------- EMAIL VALIDATION 1 ----------------- -->
+                            <div *ngIf="email.invalid && email.touched" class="error-validation">
+                                <p *ngIf="email.errors?.['required']">Por favor, insira o seu e-mail.</p>
+                            </div>
+
+                            <!-- ----------------- EMAIL VALIDATION 2 ----------------- -->
+                            <div *ngIf="registerForm.get('email')?.errors?.['email']" class="error-validation">
+                                <p>Formato incorreto, insira o @exemplo.com</p>
+                            </div>
+
+                            <!-- ----------------- EMAIL VALIDATION 3 ----------------- -->
+                            <p *ngIf="emailAlerta && email.touched" class="error-validation">{{emailAlerta}}</p>
+                           
+                           
+                            <!--PASSWORD-->
+                            <label for="senha">Senha</label>
+                            <input  class="form-input" type="{{showPass ? 'text' : 'password'}}" name="senha" id="senha" formControlName="senha" (focus)="cleanMessage()" required> 
+                            <!-- ?: operador ternário | type="{{showPass ? 'text' : 'password'}}": Permite alterar entre mostrar o texto e ocultar com o password | ?: operador ternário, representa o if-else -->
+                            <a href="#"(click)="showPass = !showPass">
+                                <i [class]="showPass ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash'" id="showPass"></i>
+                            </a>
+
+
+                            <!-- ----------------- PASS VALIDATION 1 ----------------- -->
+                            <div *ngIf="senha.invalid && senha.touched" class="error-validation">
+                                <p *ngIf="senha.errors?.['required']">Por favor, insira a sua senha.</p>
+                            </div>
+                            <!-- ----------------- PASS VALIDATION 2----------------- -->
+                            <div *ngIf="registerForm.get('senha')?.errors?.['minlength'] || registerForm.get('senha')?.errors?.['pattern']" class="error-validation">
+                                <p>A senha deve conter letras e números,<br>com o mínimo de 6 caracteres.</p>
+                            </div>
+                        </div>
+
+                        <button class="btn-sub" id="submit-btn" type="submit" (click)="emailValidation()">Criar conta</button>
+
+                        <!-- ----------------- EMAIL VALIDATION 4 ----------------- -->
+                        <p *ngIf="emailCadastrado" class="accept-validation">{{emailCadastrado}}</p>
+                    </form>
+                </div>
+                
+                <!-- ----------------- LEFT SCREEN ----------------- -->
+                <div class="left-screen">
+                    
+                    <div class="header">
+                        <span class="text">Seja bem-vindo(a) ao<br></span>
+                    </div>
+
+                    <div class="logo-header">
+                        <span class="text">Leafy</span>
+                        <span class="text-header">Life</span>
+                    </div>
+
+                    <img class="logo-leaf" src="../../assets/img/leaves.png" alt="leaves">
+
+                    <p class="subtitle">Cadastre-se para desfrutar de todos os benefícios, <br>serviços, funcionalidades e promoções <br>que o nosso site oferece.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
